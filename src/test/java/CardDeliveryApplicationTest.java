@@ -9,7 +9,6 @@ import java.time.format.DateTimeFormatter;
 import static com.codeborne.selenide.Condition.appear;
 import static com.codeborne.selenide.Selenide.*;
 
-
 public class CardDeliveryApplicationTest {
 
     private String dateForTests(int days) {
@@ -211,5 +210,50 @@ public class CardDeliveryApplicationTest {
         $("[data-test-id = 'phone'] input").setValue(phone);
         $(".button__text").click();
         $x("//label[@data-test-id='agreement'][contains(@class, 'input_invalid')]").should(appear);
+    }
+
+    /*__________________2*__________________*/
+
+    @Test
+    void selectCityFromTheList() {
+        String city = "Новосибирск";
+        String date = dateForTests(3);
+        String name = "Пупкин Василий";
+        String phone = "+79990000000";
+
+        open("http://localhost:9999/");
+        $("[data-test-id = 'city'] input").setValue("Но");
+        $x("//*[contains(text(), 'Новосибирск')]//parent::div").click();
+        $("[data-test-id = 'date'] input").sendKeys(Keys.chord(Keys.CONTROL,"a"), Keys.BACK_SPACE);
+        $("[data-test-id = 'date'] input").setValue(date);
+        $("[data-test-id = 'name'] input").setValue(name);
+        $("[data-test-id = 'phone'] input").setValue(phone);
+        $("[data-test-id = 'agreement']").click();
+        $(".button__text").click();
+        $("[data-test-id = 'notification']").shouldBe(appear, Duration.ofSeconds(15));
+    }
+
+    @Test
+    void selectDateFromTheList() {
+        String city = "Новосибирск";
+        String date = dateForTests(7);
+        String name = "Пупкин Василий";
+        String phone = "+79990000000";
+
+        String dateToday = dateForTests(0);
+
+        open("http://localhost:9999/");
+        $("[data-test-id = 'city'] input").setValue(city);
+        $x("//span[@data-test-id='date']//button").click();
+        if (dateToday != date) {
+            $x("//div[@class='calendar__arrow calendar__arrow_direction_right']").click();
+        }
+        String day = date.substring(0, 2);
+        $x("//td[text()='" + day + "']").click();
+        $("[data-test-id = 'name'] input").setValue(name);
+        $("[data-test-id = 'phone'] input").setValue(phone);
+        $("[data-test-id = 'agreement']").click();
+        $(".button__text").click();
+        $("[data-test-id = 'notification']").shouldBe(appear, Duration.ofSeconds(15));
     }
 }
