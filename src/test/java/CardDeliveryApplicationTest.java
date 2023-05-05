@@ -233,10 +233,11 @@ public class CardDeliveryApplicationTest {
         $("[data-test-id = 'notification']").shouldBe(appear, Duration.ofSeconds(15));
     }
 
-    @Test
-    void selectDateFromTheList() {
+    @ParameterizedTest
+    @CsvSource({"7", "30"})
+    void selectDateFromTheList(int number) {
         String city = "Новосибирск";
-        String date = dateForTests(7);
+        String date = dateForTests(number);
         String name = "Пупкин Василий";
         String phone = "+79990000000";
 
@@ -245,10 +246,16 @@ public class CardDeliveryApplicationTest {
         open("http://localhost:9999/");
         $("[data-test-id = 'city'] input").setValue(city);
         $x("//span[@data-test-id='date']//button").click();
-        if (dateToday != date) {
+        if (!dateToday.substring(2, 4).equals(date.substring(2, 4))) {
             $x("//div[@class='calendar__arrow calendar__arrow_direction_right']").click();
         }
-        String day = date.substring(0, 2);
+        String day;
+        if (date.indexOf('0') == 0) {
+            day = date.substring(1, 2);
+        }else {
+            day = date.substring(0, 2);
+        }
+
         $x("//td[text()='" + day + "']").click();
         $("[data-test-id = 'name'] input").setValue(name);
         $("[data-test-id = 'phone'] input").setValue(phone);
