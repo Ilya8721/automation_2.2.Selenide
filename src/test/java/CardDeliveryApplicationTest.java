@@ -1,5 +1,3 @@
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -8,9 +6,10 @@ import org.openqa.selenium.Keys;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+
 import static com.codeborne.selenide.Condition.appear;
-import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
+
 
 public class CardDeliveryApplicationTest {
 
@@ -21,7 +20,7 @@ public class CardDeliveryApplicationTest {
     }
 
     String city = "Новосибирск";
-    String checkdate = dateForTests(3);
+    String date = dateForTests(3);
     String name = "Пупкин Василий";
     String phone = "+79990000000";
 
@@ -30,7 +29,7 @@ public class CardDeliveryApplicationTest {
         open("http://localhost:9999/");
         $("[data-test-id = 'city'] input").setValue(city);
         $("[data-test-id = 'date'] input").sendKeys(Keys.chord(Keys.CONTROL,"a"), Keys.BACK_SPACE);
-        $("[data-test-id = 'date'] input").setValue(checkdate);
+        $("[data-test-id = 'date'] input").setValue(date);
         $("[data-test-id = 'name'] input").setValue(name);
         $("[data-test-id = 'phone'] input").setValue(phone);
         $("[data-test-id = 'agreement']").click();
@@ -45,7 +44,7 @@ public class CardDeliveryApplicationTest {
         open("http://localhost:9999/");
         $("[data-test-id = 'city'] input").setValue(city);
         $("[data-test-id = 'date'] input").sendKeys(Keys.chord(Keys.CONTROL,"a"), Keys.BACK_SPACE);
-        $("[data-test-id = 'date'] input").setValue(checkdate);
+        $("[data-test-id = 'date'] input").setValue(date);
         $("[data-test-id = 'name'] input").setValue(name);
         $("[data-test-id = 'phone'] input").setValue(phone);
         $("[data-test-id = 'agreement']").click();
@@ -59,7 +58,7 @@ public class CardDeliveryApplicationTest {
         open("http://localhost:9999/");
         $("[data-test-id = 'city'] input").setValue(city);
         $("[data-test-id = 'date'] input").sendKeys(Keys.chord(Keys.CONTROL,"a"), Keys.BACK_SPACE);
-        $("[data-test-id = 'date'] input").setValue(checkdate);
+        $("[data-test-id = 'date'] input").setValue(date);
         $("[data-test-id = 'name'] input").setValue(name);
         $("[data-test-id = 'phone'] input").setValue(phone);
         $("[data-test-id = 'agreement']").click();
@@ -71,7 +70,7 @@ public class CardDeliveryApplicationTest {
     void emptyCityField() {
         open("http://localhost:9999/");
         $("[data-test-id = 'date'] input").sendKeys(Keys.chord(Keys.CONTROL,"a"), Keys.BACK_SPACE);
-        $("[data-test-id = 'date'] input").setValue(checkdate);
+        $("[data-test-id = 'date'] input").setValue(date);
         $("[data-test-id = 'name'] input").setValue(name);
         $("[data-test-id = 'phone'] input").setValue(phone);
         $("[data-test-id = 'agreement']").click();
@@ -82,11 +81,11 @@ public class CardDeliveryApplicationTest {
     @ParameterizedTest
     @CsvSource({"2", "0", "-1", "-30"})
     void invalidDateField(int additionaldays) {
-        String checkdate = dateForTests(additionaldays);
+        String date = dateForTests(additionaldays);
         open("http://localhost:9999/");
         $("[data-test-id = 'city'] input").setValue(city);
         $("[data-test-id = 'date'] input").sendKeys(Keys.chord(Keys.CONTROL,"a"), Keys.BACK_SPACE);
-        $("[data-test-id = 'date'] input").setValue(checkdate);
+        $("[data-test-id = 'date'] input").setValue(date);
         $("[data-test-id = 'name'] input").setValue(name);
         $("[data-test-id = 'phone'] input").setValue(phone);
         $("[data-test-id = 'agreement']").click();
@@ -112,7 +111,7 @@ public class CardDeliveryApplicationTest {
         open("http://localhost:9999/");
         $("[data-test-id = 'city'] input").setValue(city);
         $("[data-test-id = 'date'] input").sendKeys(Keys.chord(Keys.CONTROL,"a"), Keys.BACK_SPACE);
-        $("[data-test-id = 'date'] input").setValue(checkdate);
+        $("[data-test-id = 'date'] input").setValue(date);
         $("[data-test-id = 'name'] input").setValue(name);
         $("[data-test-id = 'phone'] input").setValue(phone);
         $("[data-test-id = 'agreement']").click();
@@ -125,7 +124,7 @@ public class CardDeliveryApplicationTest {
         open("http://localhost:9999/");
         $("[data-test-id = 'city'] input").setValue(city);
         $("[data-test-id = 'date'] input").sendKeys(Keys.chord(Keys.CONTROL,"a"), Keys.BACK_SPACE);
-        $("[data-test-id = 'date'] input").setValue(checkdate);
+        $("[data-test-id = 'date'] input").setValue(date);
         $("[data-test-id = 'phone'] input").setValue(phone);
         $("[data-test-id = 'agreement']").click();
         $(".button__text").click();
@@ -138,7 +137,7 @@ public class CardDeliveryApplicationTest {
         open("http://localhost:9999/");
         $("[data-test-id = 'city'] input").setValue(city);
         $("[data-test-id = 'date'] input").sendKeys(Keys.chord(Keys.CONTROL,"a"), Keys.BACK_SPACE);
-        $("[data-test-id = 'date'] input").setValue(checkdate);
+        $("[data-test-id = 'date'] input").setValue(date);
         $("[data-test-id = 'name'] input").setValue(name);
         $("[data-test-id = 'phone'] input").setValue(phone);
         $("[data-test-id = 'agreement']").click();
@@ -151,20 +150,19 @@ public class CardDeliveryApplicationTest {
         open("http://localhost:9999/");
         $("[data-test-id = 'city'] input").setValue(city);
         $("[data-test-id = 'date'] input").sendKeys(Keys.chord(Keys.CONTROL,"a"), Keys.BACK_SPACE);
-        $("[data-test-id = 'date'] input").setValue(checkdate);
+        $("[data-test-id = 'date'] input").setValue(date);
         $("[data-test-id = 'name'] input").setValue(name);
         $("[data-test-id = 'agreement']").click();
         $(".button__text").click();
         $x("//span[@data-test-id='phone']//span[contains(text(), 'Поле обязательно для заполнения')]").should(appear);
     }
 
-
     @Test
     void unmarkedCheckbox() {
         open("http://localhost:9999/");
         $("[data-test-id = 'city'] input").setValue(city);
         $("[data-test-id = 'date'] input").sendKeys(Keys.chord(Keys.CONTROL,"a"), Keys.BACK_SPACE);
-        $("[data-test-id = 'date'] input").setValue(checkdate);
+        $("[data-test-id = 'date'] input").setValue(date);
         $("[data-test-id = 'name'] input").setValue(name);
         $("[data-test-id = 'phone'] input").setValue(phone);
         $(".button__text").click();
