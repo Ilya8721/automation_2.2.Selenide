@@ -6,7 +6,6 @@ import org.openqa.selenium.Keys;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-
 import static com.codeborne.selenide.Condition.appear;
 import static com.codeborne.selenide.Selenide.*;
 
@@ -19,13 +18,13 @@ public class CardDeliveryApplicationTest {
         return date.format(formatter);
     }
 
-    String city = "Новосибирск";
-    String date = dateForTests(3);
-    String name = "Пупкин Василий";
-    String phone = "+79990000000";
-
     @Test
     void validDataTest() {
+        String city = "Новосибирск";
+        String date = dateForTests(3);
+        String name = "Пупкин Василий";
+        String phone = "+79990000000";
+
         open("http://localhost:9999/");
         $("[data-test-id = 'city'] input").setValue(city);
         $("[data-test-id = 'date'] input").sendKeys(Keys.chord(Keys.CONTROL,"a"), Keys.BACK_SPACE);
@@ -40,7 +39,10 @@ public class CardDeliveryApplicationTest {
     @Test
     void validDataCapsLockTest() {
         String city = "НОВОСИБИРСК";
+        String date = dateForTests(3);
         String name = "ПУПКИН ВАСИЛИЙ";
+        String phone = "+79990000000";
+
         open("http://localhost:9999/");
         $("[data-test-id = 'city'] input").setValue(city);
         $("[data-test-id = 'date'] input").sendKeys(Keys.chord(Keys.CONTROL,"a"), Keys.BACK_SPACE);
@@ -55,6 +57,10 @@ public class CardDeliveryApplicationTest {
     @ParameterizedTest
     @CsvSource({"Электросталь", "Elektrostal", "1276848", "^%$#@!"})
     void invalidCityField(String city) {
+        String date = dateForTests(3);
+        String name = "Пупкин Василий";
+        String phone = "+79990000000";
+
         open("http://localhost:9999/");
         $("[data-test-id = 'city'] input").setValue(city);
         $("[data-test-id = 'date'] input").sendKeys(Keys.chord(Keys.CONTROL,"a"), Keys.BACK_SPACE);
@@ -68,6 +74,11 @@ public class CardDeliveryApplicationTest {
 
     @Test
     void emptyCityField() {
+        String city = "";
+        String date = dateForTests(3);
+        String name = "Пупкин Василий";
+        String phone = "+79990000000";
+
         open("http://localhost:9999/");
         $("[data-test-id = 'date'] input").sendKeys(Keys.chord(Keys.CONTROL,"a"), Keys.BACK_SPACE);
         $("[data-test-id = 'date'] input").setValue(date);
@@ -81,7 +92,11 @@ public class CardDeliveryApplicationTest {
     @ParameterizedTest
     @CsvSource({"2", "0", "-1", "-30"})
     void invalidDateField(int additionaldays) {
+        String city = "Новосибирск";
         String date = dateForTests(additionaldays);
+        String name = "Пупкин Василий";
+        String phone = "+79990000000";
+
         open("http://localhost:9999/");
         $("[data-test-id = 'city'] input").setValue(city);
         $("[data-test-id = 'date'] input").sendKeys(Keys.chord(Keys.CONTROL,"a"), Keys.BACK_SPACE);
@@ -95,6 +110,11 @@ public class CardDeliveryApplicationTest {
 
     @Test
     void EmptyDateField() {
+        String city = "Новосибирск";
+        String date = dateForTests(3);
+        String name = "Пупкин Василий";
+        String phone = "+79990000000";
+
         open("http://localhost:9999/");
         $("[data-test-id = 'city'] input").setValue(city);
         $("[data-test-id = 'date'] input").sendKeys(Keys.chord(Keys.CONTROL,"a"), Keys.BACK_SPACE);
@@ -108,6 +128,10 @@ public class CardDeliveryApplicationTest {
     @ParameterizedTest
     @CsvSource({"Vasya", "1276848", "^%$#@!"})
     void invalidNameField(String name) {
+        String city = "Новосибирск";
+        String date = dateForTests(3);
+        String phone = "+79990000000";
+
         open("http://localhost:9999/");
         $("[data-test-id = 'city'] input").setValue(city);
         $("[data-test-id = 'date'] input").sendKeys(Keys.chord(Keys.CONTROL,"a"), Keys.BACK_SPACE);
@@ -121,6 +145,11 @@ public class CardDeliveryApplicationTest {
 
     @Test
     void emptyNameField() {
+        String city = "Новосибирск";
+        String date = dateForTests(3);
+        String name = "";
+        String phone = "+79990000000";
+
         open("http://localhost:9999/");
         $("[data-test-id = 'city'] input").setValue(city);
         $("[data-test-id = 'date'] input").sendKeys(Keys.chord(Keys.CONTROL,"a"), Keys.BACK_SPACE);
@@ -134,6 +163,10 @@ public class CardDeliveryApplicationTest {
     @ParameterizedTest
     @CsvSource({"89990000000", "79990000000", "+799900000000", "+899900000000", "+7abc0000000", "+7999!@#$%^&", "+7(999)000-00-00"})
     void invalidPhoneField(String phone) {
+        String city = "Новосибирск";
+        String date = dateForTests(3);
+        String name = "Пупкин Василий";
+
         open("http://localhost:9999/");
         $("[data-test-id = 'city'] input").setValue(city);
         $("[data-test-id = 'date'] input").sendKeys(Keys.chord(Keys.CONTROL,"a"), Keys.BACK_SPACE);
@@ -147,6 +180,11 @@ public class CardDeliveryApplicationTest {
 
     @Test
     void EmptyPhoneField() {
+        String city = "Новосибирск";
+        String date = dateForTests(3);
+        String name = "Пупкин Василий";
+        String phone = "";
+
         open("http://localhost:9999/");
         $("[data-test-id = 'city'] input").setValue(city);
         $("[data-test-id = 'date'] input").sendKeys(Keys.chord(Keys.CONTROL,"a"), Keys.BACK_SPACE);
@@ -157,8 +195,14 @@ public class CardDeliveryApplicationTest {
         $x("//span[@data-test-id='phone']//span[contains(text(), 'Поле обязательно для заполнения')]").should(appear);
     }
 
+
     @Test
     void unmarkedCheckbox() {
+        String city = "Новосибирск";
+        String date = dateForTests(3);
+        String name = "Пупкин Василий";
+        String phone = "+79990000000";
+
         open("http://localhost:9999/");
         $("[data-test-id = 'city'] input").setValue(city);
         $("[data-test-id = 'date'] input").sendKeys(Keys.chord(Keys.CONTROL,"a"), Keys.BACK_SPACE);
