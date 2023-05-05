@@ -1,4 +1,3 @@
-import com.codeborne.selenide.SelenideElement;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -23,8 +22,7 @@ public class CardDeliveryApplicationTest {
 
     private HashMap<String, String> dateForTestsMap(int days) {
         DateTimeFormatter formatterDay = DateTimeFormatter.ofPattern("dd");
-        DateTimeFormatter formatterMonth = DateTimeFormatter.ofPattern("MMM");
-        DateTimeFormatter formatterMonthD = DateTimeFormatter.ofPattern("MM");
+        DateTimeFormatter formatterMonth = DateTimeFormatter.ofPattern("MM");
         DateTimeFormatter formatterYear = DateTimeFormatter.ofPattern("yyyy");
 
         LocalDate newDate = LocalDate.now().plusDays(days);
@@ -32,7 +30,6 @@ public class CardDeliveryApplicationTest {
         HashMap<String, String> result = new HashMap<>();
         result.put("day", newDate.format(formatterDay));
         result.put("month", newDate.format(formatterMonth));
-        result.put("monthDigit", newDate.format(formatterMonthD));
         result.put("year", newDate.format(formatterYear));
 
         return result;
@@ -256,28 +253,27 @@ public class CardDeliveryApplicationTest {
 
     @ParameterizedTest
     @CsvSource({"7", "32", "400"})
-    void selectDateFromTheList(int number) {
+    void selectDateFromTheList(int daysToDelivery) {
         String city = "Новосибирск";
         String name = "Пупкин Василий";
         String phone = "+79990000000";
 
-        HashMap<String, String> deliveryData = dateForTestsMap(number);
+        HashMap<String, String> deliveryData = dateForTestsMap(daysToDelivery);
         String deliveryDay = deliveryData.get("day");
-        int deliveryMonth = parseInt(deliveryData.get("monthDigit"));
+        int deliveryMonth = parseInt(deliveryData.get("month"));
         int deliveryYear = parseInt(deliveryData.get("year"));
 
         HashMap<String,String> currentData = dateForTestsMap(0);
-        int currentMonth = parseInt(currentData.get("monthDigit"));
-        int calendarYear = parseInt(currentData.get("year"));
+        int currentMonth = parseInt(currentData.get("month"));
+        int currentYear = parseInt(currentData.get("year"));
 
         open("http://localhost:9999/");
         $("[data-test-id = 'city'] input").setValue(city);
         $x("//span[@data-test-id='date']//button").click();
 
-        while (calendarYear < deliveryYear) {
-            $x("//div[@class='calendar__arrow calendar__arrow_direction_right calendar__arrow_double']")
-                    .click();
-            calendarYear++;
+        while (currentYear < deliveryYear) {
+            $x("//div[@class='calendar__arrow calendar__arrow_direction_right calendar__arrow_double']").click();
+            currentYear++;
         }
         while (currentMonth < deliveryMonth) {
             $x("//div[@class='calendar__arrow calendar__arrow_direction_right']").click();
@@ -292,7 +288,7 @@ public class CardDeliveryApplicationTest {
         if (deliveryDay.indexOf('0') == 0) {
             day = deliveryDay.substring(1, 2);
         }else {
-            day = deliveryDay.substring(0, 2);
+            day = deliveryDay;
         }
 
         $x("//td[text()='" + day + "']").click();
