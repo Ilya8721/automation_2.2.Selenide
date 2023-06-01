@@ -1,4 +1,4 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/4jvhcqpf64kccmyf/branch/main?svg=true)](https://ci.appveyor.com/project/Ilya8721/automation-dz2-2/branch/main)
+[![Build status](https://ci.appveyor.com/api/projects/status/q909k9opt0vc2ivr/branch/main?svg=true)](https://ci.appveyor.com/project/Ilya8721/automation-2-2-selenide/branch/main)
 
 # Домашнее задание к занятию «2.2. Selenide»
 
